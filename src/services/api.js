@@ -1,7 +1,21 @@
 import axios from "axios";
 
-const baseUrl = "https://api.skypicker.com";
+/**
+ * Base URL of Kiwi.com public API.
+ * @type {string}
+ */
+const BASE_URL = "https://api.skypicker.com";
 
+/**
+ * Abstraction of API call to the "flights" endpoint.
+ * Performs some parameter preprocessing before invocation.
+ * @param flyFrom
+ * @param to
+ * @param date
+ * @param limit
+ * @param offset
+ * @returns {Promise<any>}
+ */
 export async function getFlights(flyFrom, to, date, limit = 100, offset = 0) {
 
   if (Array.isArray(flyFrom)) flyFrom = flyFrom.join(",");
@@ -27,6 +41,12 @@ export async function getFlights(flyFrom, to, date, limit = 100, offset = 0) {
   return await axios.get(url);
 }
 
+/**
+ * Abstraction of API call to the "locations/" endpoint.
+ * ("locations" endpoint call fails on CORS)
+ * @param term
+ * @returns {Promise<any>}
+ */
 export async function getLocations(term) {
 
   const endpoint = "locations/";
@@ -37,6 +57,13 @@ export async function getLocations(term) {
   return await axios.get(url);
 }
 
+/**
+ * Helper function to build correct request URL.
+ * @param endpoint
+ * @param query
+ * @returns {string}
+ * @private
+ */
 function _buildUrl(endpoint, query) {
 
   let params = [];
@@ -44,5 +71,5 @@ function _buildUrl(endpoint, query) {
     params.push(`${param}=${encodeURIComponent(query[param])}`)
   }
 
-  return `${baseUrl}/${endpoint}?${params.join("&")}`
+  return `${BASE_URL}/${endpoint}?${params.join("&")}`
 }
