@@ -11,6 +11,10 @@ git clone https://github.com/mnmkng/kiwi-barcelona.git
 ```
 
 ```
+cd kiwi-barcelona
+```
+
+```
 npm install
 ```
 
